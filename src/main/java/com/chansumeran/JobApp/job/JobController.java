@@ -24,13 +24,25 @@ public class JobController {
     }
 
     @GetMapping()
-    public List<Job> findAll() {
-        return jobService.findAll();
+    public ResponseEntity<List<Job>> findAll() {
+        List<Job> jobs = jobService.findAll();
+
+        if (jobs.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        return new ResponseEntity<>(jobs, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public Job getJobById(@PathVariable Long id) {
-        return jobService.getJobById(id);
+    public ResponseEntity<Job> getJobById(@PathVariable Long id) {
+        Job job = jobService.getJobById(id);
+
+        if (job != null) {
+            return new ResponseEntity<>(job, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PutMapping("/{id}")

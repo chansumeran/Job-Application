@@ -53,9 +53,8 @@ public class JobServiceImpl implements JobService {
 
     @Override
     public Boolean deleteJob(Long id) {
-        Optional<Job> jobOptional = jobRepository.findById(id);
 
-        if (jobOptional.isPresent()) {
+        if (jobRepository.existsById(id)) {
             jobRepository.deleteById(id);
             return true;
         }
