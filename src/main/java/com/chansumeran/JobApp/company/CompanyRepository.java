@@ -1,2 +1,6 @@
-package com.chansumeran.JobApp.company;public class CompanyRepository {
+package com.chansumeran.JobApp.company;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface CompanyRepository extends JpaRepository<Company, Long> {
 }
