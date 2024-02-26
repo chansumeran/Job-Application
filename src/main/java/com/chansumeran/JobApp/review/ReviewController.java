@@ -39,10 +39,24 @@ public class ReviewController {
         return new ResponseEntity<>(reviewsOfCompany, HttpStatus.OK);
     }
 
-    @GetMapping("/review/{reviewId}")
+    @GetMapping("/reviews/{reviewId}")
     public ResponseEntity<Review> getReviewOfSpecificCompany(@PathVariable Long companyId,
                                                              @PathVariable Long reviewId) {
         return new ResponseEntity<>(reviewService.getReviewOfSpecificCompany(companyId, reviewId), HttpStatus.OK);
     }
+
+    @PutMapping("reviews/{reviewId}")
+    public ResponseEntity<String> updateReview(@PathVariable Long companyId,
+                                               @PathVariable Long reviewId,
+                                               @RequestBody Review review) {
+        boolean isUpdated = reviewService.updateReview(companyId, reviewId, review);
+
+        if (isUpdated) {
+            return new ResponseEntity<>("Review updated successfully", HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>("Review was not updated", HttpStatus.NOT_FOUND);
+    }
+
 
 }

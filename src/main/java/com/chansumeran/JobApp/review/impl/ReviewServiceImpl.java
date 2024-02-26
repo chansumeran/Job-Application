@@ -8,6 +8,7 @@ import com.chansumeran.JobApp.review.ReviewService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
@@ -46,5 +47,27 @@ public class ReviewServiceImpl implements ReviewService {
                 .filter(review -> review.getId().equals(reviewId))
                 .findFirst()
                 .orElse(null);
+    }
+
+    @Override
+    public boolean updateReview(Long companyId, Long reviewId, Review reviewRequest) {
+        List<Review> reviews = reviewRepository.findByCompanyId(companyId);
+
+        Optional<Review> reviewOptional = reviews.stream().
+                filter(review -> review.getId().equals(reviewId))
+                .findFirst();
+
+        if (reviewOptional.isPresent()) {
+            Review reviewToUpdate = reviewOptional.get();
+
+            reviewToUpdate.setTitle(reviewRequest.getTitle());
+            reviewToUpdate.setDescription(reviewRequest.getDescription());
+            reviewToUpdate.setRating(reviewRequest.getRating());
+
+            reviewRepository.save(reviewToUpdate);
+            return true;
+        }
+
+        return false;
     }
 }

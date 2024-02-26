@@ -12,4 +12,6 @@ public interface ReviewService {
 
     // get review of a specific company
     Review getReviewOfSpecificCompany(Long companyId, Long reviewId);
+
+    boolean updateReview(Long companyId, Long reviewId, Review review);
 }
