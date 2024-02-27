@@ -70,4 +70,21 @@ public class ReviewServiceImpl implements ReviewService {
 
         return false;
     }
+
+    @Override
+    public boolean deleteReview(Long companyId, Long reviewId) {
+        List<Review> reviews = reviewRepository.findByCompanyId(companyId);
+
+        Optional<Review> reviewOptional = reviews.stream()
+                .filter(review -> review.getId().equals(reviewId))
+                .findFirst();
+
+        if (reviewOptional.isPresent()) {
+            Review reviewToDelete = reviewOptional.get();
+            reviewRepository.delete(reviewToDelete);
+            return true;
+        }
+
+        return false;
+    }
 }
