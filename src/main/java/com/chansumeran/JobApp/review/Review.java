@@ -1,7 +1,7 @@
 package com.chansumeran.JobApp.review;
 
 import com.chansumeran.JobApp.company.Company;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -15,7 +15,7 @@ public class Review {
     private String description;
     private double rating;
 
-    @JsonIgnore
+    @JsonBackReference
     @ManyToOne
     private Company company;
 
