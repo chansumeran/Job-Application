@@ -2,6 +2,7 @@ package com.chansumeran.JobApp.company.impl;
 
 import com.chansumeran.JobApp.company.Company;
 import com.chansumeran.JobApp.company.CompanyRepository;
+import com.chansumeran.JobApp.company.CompanyRequestDto;
 import com.chansumeran.JobApp.company.CompanyService;
 import com.chansumeran.JobApp.job.Job;
 import org.springframework.stereotype.Service;
@@ -42,7 +43,11 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public void createCompany(Company company) {
+    public void createCompany(CompanyRequestDto companyRequest) {
+        Company company = new Company();
+        company.setName(companyRequest.getName());
+        company.setDescription(companyRequest.getDescription());
+
         companyRepository.save(company);
     }
 
