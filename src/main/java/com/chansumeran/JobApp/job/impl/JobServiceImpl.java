@@ -7,12 +7,11 @@ import com.chansumeran.JobApp.job.JobService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class JobServiceImpl implements JobService {
 
-    JobRepository jobRepository;
+    private final JobRepository jobRepository;
 
     public JobServiceImpl(JobRepository jobRepository) {
         this.jobRepository = jobRepository;
