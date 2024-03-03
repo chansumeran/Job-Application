@@ -2,6 +2,7 @@ package com.chansumeran.JobApp.job.impl;
 
 import com.chansumeran.JobApp.job.Job;
 import com.chansumeran.JobApp.job.JobRepository;
+import com.chansumeran.JobApp.job.JobRequestDto;
 import com.chansumeran.JobApp.job.JobService;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +24,15 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public void createJob(Job job) {
+    public void createJob(JobRequestDto jobRequestDto) {
+        Job job = new Job();
+
+        job.setTitle(jobRequestDto.getTitle());
+        job.setDescription(jobRequestDto.getDescription());
+        job.setMinSalary(jobRequestDto.getMinSalary());
+        job.setMaxSalary(jobRequestDto.getMaxSalary());
+        job.setLocation(jobRequestDto.getLocation());
+
         jobRepository.save(job);
     }
 
@@ -33,18 +42,18 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public Boolean updateJob(Long id, Job jobUpdate) {
-        Optional<Job> jobOptional = jobRepository.findById(id);
+    public Boolean updateJob(Long id, JobRequestDto jobRequest) {
+        Job jobToUpdate = jobRepository.findById(id).orElse(null);
 
-        if (jobOptional.isPresent()) {
-            Job job = jobOptional.get();
-            job.setTitle(jobUpdate.getTitle());
-            job.setDescription(jobUpdate.getDescription());
-            job.setMinSalary(jobUpdate.getMinSalary());
-            job.setMaxSalary(jobUpdate.getMaxSalary());
-            job.setLocation(jobUpdate.getLocation());
+        if (jobToUpdate != null) {
 
-            jobRepository.save(job);
+            jobToUpdate.setTitle(jobRequest.getTitle());
+            jobToUpdate.setDescription(jobRequest.getDescription());
+            jobToUpdate.setMinSalary(jobRequest.getMinSalary());
+            jobToUpdate.setMaxSalary(jobRequest.getMaxSalary());
+            jobToUpdate.setLocation(jobRequest.getLocation());
+
+            jobRepository.save(jobToUpdate);
             return true;
         }
 

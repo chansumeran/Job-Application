@@ -18,8 +18,8 @@ public class JobController {
     }
 
     @PostMapping()
-    public ResponseEntity<String> createJob(@RequestBody Job job) {
-        jobService.createJob(job);
+    public ResponseEntity<String> createJob(@RequestBody JobRequestDto jobRequest) {
+        jobService.createJob(jobRequest);
         return new ResponseEntity<>("Job added successfully", HttpStatus.CREATED);
     }
 
@@ -46,8 +46,8 @@ public class JobController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateJob(@PathVariable Long id, @RequestBody Job job) {
-        Boolean isUpdated = jobService.updateJob(id, job);
+    public ResponseEntity<String> updateJob(@PathVariable Long id, @RequestBody JobRequestDto jobRequest) {
+        Boolean isUpdated = jobService.updateJob(id, jobRequest);
 
         if (isUpdated)
             return new ResponseEntity<>("Job updated successfully", HttpStatus.OK);
