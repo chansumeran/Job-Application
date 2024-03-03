@@ -1,6 +1,5 @@
 package com.chansumeran.JobApp.company;
 
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -46,8 +45,8 @@ public class CompanyController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateCompany(@PathVariable Long id, @RequestBody Company company) {
-        boolean isUpdated = companyService.updateCompany(id, company);
+    public ResponseEntity<String> updateCompany(@PathVariable Long id, @RequestBody CompanyRequestDto companyRequest) {
+        boolean isUpdated = companyService.updateCompany(id, companyRequest);
 
         if (isUpdated) {
             return new ResponseEntity<>("Company updated successfully", HttpStatus.OK);
