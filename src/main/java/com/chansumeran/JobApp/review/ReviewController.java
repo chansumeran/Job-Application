@@ -17,8 +17,8 @@ public class ReviewController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createReview(@PathVariable Long companyId, @RequestBody Review review) {
-        boolean isCreated = reviewService.createReview(companyId, review);
+    public ResponseEntity<String> createReview(@PathVariable Long companyId, @RequestBody ReviewRequestDto reviewRequestDto) {
+        boolean isCreated = reviewService.createReview(companyId, reviewRequestDto);
 
         if (isCreated) {
             return new ResponseEntity<>("Review added successfully", HttpStatus.CREATED);
@@ -48,8 +48,8 @@ public class ReviewController {
     @PutMapping("reviews/{reviewId}")
     public ResponseEntity<String> updateReview(@PathVariable Long companyId,
                                                @PathVariable Long reviewId,
-                                               @RequestBody Review review) {
-        boolean isUpdated = reviewService.updateReview(companyId, reviewId, review);
+                                               @RequestBody ReviewRequestDto reviewRequest) {
+        boolean isUpdated = reviewService.updateReview(companyId, reviewId, reviewRequest);
 
         if (isUpdated) {
             return new ResponseEntity<>("Review updated successfully", HttpStatus.OK);

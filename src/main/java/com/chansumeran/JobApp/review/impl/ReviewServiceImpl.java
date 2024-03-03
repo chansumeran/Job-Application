@@ -4,6 +4,7 @@ import com.chansumeran.JobApp.company.Company;
 import com.chansumeran.JobApp.company.CompanyService;
 import com.chansumeran.JobApp.review.Review;
 import com.chansumeran.JobApp.review.ReviewRepository;
+import com.chansumeran.JobApp.review.ReviewRequestDto;
 import com.chansumeran.JobApp.review.ReviewService;
 import org.springframework.stereotype.Service;
 
@@ -23,11 +24,17 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public boolean createReview(Long companyId, Review review) {
+    public boolean createReview(Long companyId, ReviewRequestDto reviewRequest) {
         Company company = companyService.getCompanyById(companyId);
 
         if (company != null) {
+            Review review = new Review();
+
+            review.setTitle(reviewRequest.getTitle());
+            review.setDescription(reviewRequest.getDescription());
+            review.setRating(review.getRating());
             review.setCompany(company);
+
             reviewRepository.save(review);
             return true;
         }
@@ -50,7 +57,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public boolean updateReview(Long companyId, Long reviewId, Review reviewRequest) {
+    public boolean updateReview(Long companyId, Long reviewId, ReviewRequestDto reviewRequest) {
         List<Review> reviews = reviewRepository.findByCompanyId(companyId);
 
         Optional<Review> reviewOptional = reviews.stream().
